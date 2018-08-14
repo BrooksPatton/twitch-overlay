@@ -1,0 +1,7 @@
+[package]
+name = "twitch_overlay"
+version = "0.1.0"
+authors = ["Brooks Patton <brooks@brookzerker.com>"]
+
+[dependencies]
+actix-web = "0.7.3"
