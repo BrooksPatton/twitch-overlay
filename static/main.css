@@ -3,6 +3,7 @@ body {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-color: black;
 }
 
 .rust-logo {
@@ -11,7 +12,7 @@ body {
   height: 75vmin;
   mask-repeat: no-repeat;
   mask-size: 75vmin;
-  background-color: black;
+  background-color: white;
   animation-name: rotate;
   animation-duration: 25s;
   animation-iteration-count: infinite;
@@ -21,6 +22,7 @@ body {
 h1 {
   font-size: 8vmin;
   margin-top: -7vmin;
+  color: white;
 }
 
 @keyframes rotate {
