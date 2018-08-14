@@ -8,10 +8,13 @@ body {
 
 .rust-logo {
   mask-image: url("/static/rust-logo-blk.svg");
+  -webkit-mask-image: url("/static/rust-logo-blk.svg");
   width: 75vmin;
   height: 75vmin;
   mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
   mask-size: 75vmin;
+  -webkit-mask-size: 75vmin;
   background-color: white;
   animation-name: rotate;
   animation-duration: 25s;
