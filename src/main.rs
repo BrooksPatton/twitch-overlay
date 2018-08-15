@@ -12,12 +12,18 @@ fn break_time(_req: &HttpRequest) -> HttpResponse {
         .body(include_str!("../static/break_time.html"))
 }
 
+fn stream_ending(_req: &HttpRequest) -> HttpResponse {
+    HttpResponse::Ok()
+        .body(include_str!("../static/thanks_for_watching.html"))
+}
+
 fn main() {
     server::new(|| {
         App::new()
             .handler("/static", fs::StaticFiles::new("./static").unwrap())
             .resource("/", |r| r.f(starting_soon))
             .resource("/break", |r| r.f(break_time))
+            .resource("/stream-ending", |r| r.f(stream_ending))
     })
     .bind("127.0.0.1:3001")
     .expect("Could not initiate web server")
