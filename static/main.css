@@ -24,8 +24,11 @@ body {
 
 h1 {
   font-size: 8vmin;
-  margin-top: -7vmin;
   color: white;
+}
+
+.below-title {
+  margin-top: -7vmin;
 }
 
 @keyframes rotate {
