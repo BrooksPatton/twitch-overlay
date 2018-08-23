@@ -3,6 +3,28 @@
     // Create WebSocket connection.
     const socket = new WebSocket('ws://localhost:3002');
 
+    socket.addEventListener('open', function(event) {
+      socket.send(JSON.stringify({nickname: "chatbot", message: "running"}));
+    })
+
+    socket.addEventListener('close', function(event) {
+      const body = document.querySelector('body')
+      const error = document.createElement('h1')
+
+      error.textContent = 'The web socket was closed :('
+
+      body.appendChild(error)
+    })
+
+    socket.addEventListener('error', function(event) {
+      const body = document.querySelector('body')
+      const error = document.createElement('h1')
+
+      error.textContent = 'Error Error Error Error Error Error Error Error Error Error '
+
+      body.appendChild(error)
+    })
+
     // Listen for messages
     socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data);
