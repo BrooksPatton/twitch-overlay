@@ -3,14 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Hello world</title>
+  <title>{{title}}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" type="text/css" media="screen" href="/static/main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/{{css}}.css" />
   <!-- <script src="main.js"></script> -->
 </head>
 <body>
-  <div class="rust-logo logo-large"></div>
-  <h1 class="below-title">Starting soon</h1>
+  {{#if location.startingSoon}}
+    {{~> starting-soon}}
+  {{/if}}
+
+  {{#if location.breakTime}}
+    {{~> break-time}}
+  {{/if}}
 </body>
 </html>
