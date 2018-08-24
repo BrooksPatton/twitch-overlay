@@ -13,11 +13,7 @@ struct AppState {
 
 fn starting_soon((state, _query): (State<AppState>, Query<HashMap<String, String>>)) -> Result<HttpResponse, Error> {
     let data = serialize_data("starting soon", "main", "startingSoon");
-
-    let html = state
-        .template
-        .render("index", &data)
-        .map_err(|_| error::ErrorInternalServerError("Error rendering index"))?;
+    let html = render_html(state, data)?;
 
     Ok(HttpResponse::Ok()
         .content_type("text/html")
@@ -27,10 +23,7 @@ fn starting_soon((state, _query): (State<AppState>, Query<HashMap<String, String
 fn break_time((state, _query): (State<AppState>, Query<HashMap<String, String>>)) -> Result<HttpResponse, Error> {
     let data = serialize_data("break time", "main", "breakTime");
 
-    let html = state
-        .template
-        .render("index", &data)
-        .map_err(|_| error::ErrorInternalServerError("Error rendering index"))?;
+    let html = render_html(state, data)?;
 
     Ok(HttpResponse::Ok()
         .content_type("text/html")
@@ -82,4 +75,13 @@ fn serialize_data(title: &str, css: &str, location: &str) -> serde_json::Value {
             location: true
         }
     })
+}
+
+fn render_html(state: State<AppState>, data: serde_json::Value) -> Result<String, Error> {
+    let html = state
+        .template
+        .render("index", &data)
+        .map_err(|_| error::ErrorInternalServerError("Error rendering index"))?;
+
+    Ok(html)
 }
