@@ -22,7 +22,6 @@ fn starting_soon((state, _query): (State<AppState>, Query<HashMap<String, String
 
 fn break_time((state, _query): (State<AppState>, Query<HashMap<String, String>>)) -> Result<HttpResponse, Error> {
     let data = serialize_data("break time", "main", "breakTime");
-
     let html = render_html(state, data)?;
 
     Ok(HttpResponse::Ok()
@@ -30,9 +29,13 @@ fn break_time((state, _query): (State<AppState>, Query<HashMap<String, String>>)
         .body(html))
 }
 
-fn stream_ending(_req: &HttpRequest) -> HttpResponse {
-    HttpResponse::Ok()
-        .body(include_str!("../static/thanks_for_watching.html"))
+fn ending((state, _query): (State<AppState>, Query<HashMap<String, String>>)) -> Result<HttpResponse, Error> {
+    let data = serialize_data("stream ending", "main", "ending");
+    let html = render_html(state, data)?;
+
+    Ok(HttpResponse::Ok()
+        .content_type("text/html")
+        .body(html))
 }
 
 fn general_overlay(_req: &HttpRequest) -> HttpResponse {
@@ -51,7 +54,7 @@ fn main() {
             .handler("/static", fs::StaticFiles::new("./static").unwrap())
             .resource("/", |r| r.method(http::Method::GET).with(starting_soon))
             .resource("/break", |r| r.method(http::Method::GET).with(break_time))
-            // .resource("/stream-ending", |r| r.f(stream_ending))
+            .resource("/ending", |r| r.method(http::Method::GET).with(ending))
             // .resource("/overlay", |r| r.f(general_overlay))
     })
     .bind("127.0.0.1:3001")
@@ -64,7 +67,9 @@ fn register_templates(hbs: &mut Handlebars) {
 
     hbs.register_template_string("starting-soon", include_str!("../templates/starting-soon.hbs")).expect("error registering starting soon");
 
-    hbs.register_template_string("break-time", include_str!("../templates/break-time.hbs")).expect("error registering starting soon");
+    hbs.register_template_string("break-time", include_str!("../templates/break-time.hbs")).expect("error registering break");
+
+    hbs.register_template_string("ending", include_str!("../templates/ending.hbs")).expect("error registering ending");
 }
 
 fn serialize_data(title: &str, css: &str, location: &str) -> serde_json::Value {
