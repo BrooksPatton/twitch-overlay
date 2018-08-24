@@ -12,7 +12,7 @@ struct AppState {
 }
 
 fn starting_soon((state, _query): (State<AppState>, Query<HashMap<String, String>>)) -> Result<HttpResponse, Error> {
-    let data = json!({"title": "starting soon", "css": "main", "location": {"startingSoon": true}});
+    let data = serialize_data("starting soon", "main", "startingSoon");
 
     let html = state
         .template
@@ -25,7 +25,7 @@ fn starting_soon((state, _query): (State<AppState>, Query<HashMap<String, String
 }
 
 fn break_time((state, _query): (State<AppState>, Query<HashMap<String, String>>)) -> Result<HttpResponse, Error> {
-    let data = json!({"title": "break time", "css": "main", "location": {"breakTime": true}});
+    let data = serialize_data("break time", "main", "breakTime");
 
     let html = state
         .template
@@ -72,4 +72,14 @@ fn register_templates(hbs: &mut Handlebars) {
     hbs.register_template_string("starting-soon", include_str!("../templates/starting-soon.hbs")).expect("error registering starting soon");
 
     hbs.register_template_string("break-time", include_str!("../templates/break-time.hbs")).expect("error registering starting soon");
+}
+
+fn serialize_data(title: &str, css: &str, location: &str) -> serde_json::Value {
+    json!({
+        "title": title,
+        "css": css,
+        "location": {
+            location: true
+        }
+    })
 }
