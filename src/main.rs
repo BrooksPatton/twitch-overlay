@@ -3,7 +3,7 @@ extern crate actix_web;
 extern crate serde_json;
 extern crate handlebars;
 
-use actix_web::{server, App, HttpRequest, HttpResponse, fs, http, State, Query, Error, error};
+use actix_web::{server, App, HttpResponse, fs, http, State, Query, Error, error};
 use handlebars::Handlebars;
 use std::collections::HashMap;
 
@@ -38,9 +38,13 @@ fn ending((state, _query): (State<AppState>, Query<HashMap<String, String>>)) ->
         .body(html))
 }
 
-fn general_overlay(_req: &HttpRequest) -> HttpResponse {
-    HttpResponse::Ok()
-        .body(include_str!("../static/general_overlay.html"))
+fn rust_tutorial((state, _query): (State<AppState>, Query<HashMap<String, String>>)) -> Result<HttpResponse, Error> {
+    let data = serialize_data("Introduction to Rust", "rust_tutorial", "rustTutorial");
+    let html = render_html(state, data)?;
+
+    Ok(HttpResponse::Ok()
+        .content_type("text/html")
+        .body(html))
 }
 
 fn main() {
@@ -55,7 +59,7 @@ fn main() {
             .resource("/", |r| r.method(http::Method::GET).with(starting_soon))
             .resource("/break", |r| r.method(http::Method::GET).with(break_time))
             .resource("/ending", |r| r.method(http::Method::GET).with(ending))
-            // .resource("/overlay", |r| r.f(general_overlay))
+            .resource("/rust-tutorial", |r| r.method(http::Method::GET).with(rust_tutorial))
     })
     .bind("127.0.0.1:3001")
     .expect("Could not initiate web server")
@@ -70,6 +74,8 @@ fn register_templates(hbs: &mut Handlebars) {
     hbs.register_template_string("break-time", include_str!("../templates/break-time.hbs")).expect("error registering break");
 
     hbs.register_template_string("ending", include_str!("../templates/ending.hbs")).expect("error registering ending");
+
+    hbs.register_template_string("rusttutorial", include_str!("../templates/rusttutorial.hbs")).expect("error registering rusttutorial");
 }
 
 fn serialize_data(title: &str, css: &str, location: &str) -> serde_json::Value {

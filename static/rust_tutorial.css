@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css?family=Monoton|Montserrat');
+
+html {
+  background-color: black;
+}
+
+body {
+  overflow: hidden;
+  color: white;
+}
+
+.background-tile {
+  /* width: 100vw;
+  height: 100vh; */
+  /* z-index: 1; */
+  background-color: #8D513A;
+  mask-image: url('./rust-logo-blk.svg');
+  -webkit-mask-image: url('./rust-logo-blk.svg');
+  /* mask-size: 15px; */
+  /* -webkit-mask-size: 15px; */
+  /* opacity: 0.2; */
+  position: fixed;
+  /* top: 0px;
+  left: 0px; */
+}
+
+.rust-tutorial {
+  opacity: 1;
+}
+
+header {
+  position: absolute;
+  text-align: center;
+  top: 18rem;
+  left: 32rem;
+  font-size: 5rem;
+  z-index: 100;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.brookzerker-logo {
+  margin: 5rem 0 0 5rem;
+  font-family: 'Monoton', cursive;
+}
+
+.brookzerker-logo > div.outline {
+  position: relative;
+  outline: 2px solid #555;
+  width: 6em;
+  background-color: #333;
+  padding: 1em;
+}
+
+.brookzerker-logo .letter {
+  font-size: 6em;
+  color: brown;
+}
+
+.brookzerker-logo .sub-letter {
+  color: skyblue;
+  position: absolute;
+  font-size: 2.4em;
+  top: 10px;
+  right: 15px;
+}
+
+.rust-logo {
+  margin: -8rem auto 0 auto;
+}
+
+.rust-logo {
+  z-index: 10;
+  background-color: #8D513A;
+  mask-image: url('./rust-logo-blk.svg');
+  -webkit-mask-image: url('./rust-logo-blk.svg');
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 50rem;
+  -webkit-mask-size: 50rem;
+  width: 50rem;
+  height: 50rem;
+  animation-name: rotate;
+  animation-duration: 240s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  opacity: 0.7;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
